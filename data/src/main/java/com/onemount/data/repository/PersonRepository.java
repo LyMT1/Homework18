@@ -206,6 +206,8 @@ public class PersonRepository {
     return (double) maleCount / (double) (people.size() - maleCount);
   }
 
+//  Bài tập Phân tích dữ liệu
+//  1. Trả về danh sách 'developer' ở các thành phố Hanoi, Saigon, Shanghai
   public Map<String,List<Person>> devhanoisaigoshanghai() {
     Map<String, List<Person>> groupDevelopersByCity = people
             .stream()
@@ -220,6 +222,7 @@ public class PersonRepository {
             ));
   }
 
+//  2. Tìm ra thành phố có độ tuổi trung bình của lập trình viên trẻ nhất
   public List<Map.Entry<String,Double>> youngestdevs() {
 
     Map<String, List<Person>> groupDevelopersByCity = people
@@ -241,8 +244,9 @@ public class PersonRepository {
             .collect(Collectors.toList());
   }
 
+//  3. Liệt kê tỷ lệ nam/nữ ở từng thành phố
   public Map<String, Double> malefemaleratio() {
-    Map<String, Double> result = new HashMap<>();
+    Map<String, Double> malefemaleratio = new HashMap<>();
     Map<String, List<Person>> groupByCity = people
             .stream()
             .collect(Collectors.groupingBy(Person::getCity));
@@ -251,11 +255,12 @@ public class PersonRepository {
               .filter(p -> p.getGender().equalsIgnoreCase("Male"))
               .collect(Collectors.counting());
       long countFemale = map.getValue().size() - countMale;
-      result.put(map.getKey(), ((double)countMale / countFemale));
+      malefemaleratio.put(map.getKey(), ((double)countMale / countFemale));
     }
-    return result;
+    return malefemaleratio;
   }
 
+//  4. Tính mức lương trung bình của tất cả những người trên 30 tuổi
   public Double avgsalarypeopleabove30() {
     return people
             .stream()
